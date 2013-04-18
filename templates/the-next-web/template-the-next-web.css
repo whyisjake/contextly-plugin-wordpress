@@ -1,0 +1,32 @@
+.entry-content .blocks-widget p {
+	line-height: 25px;
+}
+
+.blocks-widget li {
+	float: left;
+	list-style: none;
+	margin-left: 0;
+	margin-right: 36px;
+}
+
+.blocks-widget a {
+	color: #424242;
+	text-decoration: none;
+	font-size: 20px;
+	font-weight: 100;
+}
+
+.blocks-widget a:hover {
+	color: #ef4423;
+}
+
+.blocks-widget img {
+	display: block;
+	margin-bottom: 20px;
+	-webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+	-o-box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+	width: 222px;
+	height: 105px;
+}

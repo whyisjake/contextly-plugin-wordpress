@@ -292,6 +292,8 @@ class Contextly
             wp_enqueue_script( 'contextly-create-class', plugins_url( 'js/contextly-class.js' , __FILE__ ), 'easy_xdm', CONTEXTLY_PLUGIN_VERSION );
             wp_enqueue_script( 'contextly', $this->getPluginJs(), 'contextly-create-class', CONTEXTLY_PLUGIN_VERSION, false );
 
+            wp_enqueue_script( 'the-next-web', plugins_url( 'templates/the-next-web/template-the-next-web.js', __FILE__ ) );
+
             $ajax_url = plugins_url( 'ajax.php' , __FILE__ );
             $home_url = home_url( '/' );
 

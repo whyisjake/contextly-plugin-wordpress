@@ -91,11 +91,28 @@ Contextly.createClass = function (data)
         return _class === Object;
     };
 
+    // Use the following regex to test whether _super is actually used in the derived function.
+    // http://ejohn.org/blog/simple-javascript-inheritance/
+    var fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
+
     // rest of data are prototype methods
     for(var p in data) {
         if (typeof data[p] != "function") // copy only functions
             continue;
-        proto[p] = data[p];
+
+        if (typeof proto[p] == "function" && fnTest.test(data[p]) ) {
+            proto[p] = (function(_super, func){
+                return function() {
+                    var tmp = this._super;
+                    this._super = _super;
+                    var ret = func.apply(this, arguments);
+                    this._super = tmp;
+                    return ret;
+                };
+            }(proto[p], data[p]));
+        }
+        else
+            proto[p] = data[p];
     }
 
     // static functions of class
