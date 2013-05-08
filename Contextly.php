@@ -17,6 +17,7 @@ class Contextly
     const WIDGET_SNIPPET_ID = 'linker_widget';
     const WIDGET_SNIPPET_CLASS = 'contextly-widget';
     const WIDGET_SNIPPET_META_BOX_TITLE = 'Contextly Related Links';
+    const WIDGET_SOCIALER_META_BOX_TITLE = 'Contextly Socialer';
 
     const WIDGET_SIDEBAR_CLASS = 'contextly-sidebar-hidden';
     const WIDGET_SIDEBAR_PREFIX = 'contextly-';
@@ -129,7 +130,18 @@ class Contextly
                 $this->addEditorButtons();
             }
         }
+
+	    $this->initSocialer();
     }
+
+	private function initSocialer() {
+		$api_options = $this->getAPIClientOptions();
+
+		if ( $api_options[ 'appID' ] ) {
+			$this->addAdminSocialerMetaboxForPage( self::PAGE_TYPE_PAGE );
+			$this->addAdminSocialerMetaboxForPage( self::PAGE_TYPE_POST );
+		}
+	}
 
     public function publishBoxControlSavePostHook( $post_id ) {
         if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return false;
@@ -179,9 +191,26 @@ class Contextly
         );
     }
 
+	private function addAdminSocialerMetaboxForPage( $page_type ) {
+		add_meta_box(
+			'contextly_socialer_sectionid',
+			__( self::WIDGET_SOCIALER_META_BOX_TITLE, 'contextly_socialer_textdomain' ),
+			array( $this, 'echoAdminSocialerMetaboxContent' ),
+			$page_type,
+			'side',
+			'high'
+		);
+	}
+
     public function echoAdminMetaboxContent() {
         echo $this->getSnippetWidget();
     }
+
+	public function echoAdminSocialerMetaboxContent() {
+		$api_options = $this->getAPIClientOptions();
+
+		echo '<input type="button" onclick="window.open(\'' . Urls::getSocialerUrl( $api_options[ 'appID' ] ) . '\')" value="Run Socialer" class="button action">';
+	}
 
     public function addSnippetWidgetToContent( $content ) {
         return $content . $this->getSnippetWidget();

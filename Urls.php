@@ -67,4 +67,8 @@ class Urls {
 		return $prefix . 'js/' . $js_file;
 	}
 
+	static public function getSocialerUrl( $app_id ) {
+		return self::getMainServerUrl() . "redirect/?type=socialer&app=" . $app_id;
+	}
+
 }
